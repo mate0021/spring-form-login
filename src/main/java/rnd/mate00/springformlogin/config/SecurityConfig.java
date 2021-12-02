@@ -7,6 +7,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import rnd.mate00.springformlogin.handler.CustomAuthSuccessHandler;
 import rnd.mate00.springformlogin.handler.CustomAuthenticationFailedHandler;
 
 @Configuration
@@ -22,7 +25,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .formLogin()
                 .loginPage("/signin")
                 .loginProcessingUrl("/handleLogin")
-                .successForwardUrl("/restricted")
+//                .defaultSuccessUrl("/restricted") // <- can be also done by authSuccessHandler
+//                .failureUrl("/"); // <- can be also done by customAuthFailedHandler
+                .successHandler(authSuccessHandler())
                 .failureHandler(customAuthFailedHandler());
     }
 
@@ -31,16 +36,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth
             .inMemoryAuthentication()
             .passwordEncoder(new BCryptPasswordEncoder())
-            .withUser("user1").password(passwordEncoder().encode("pass1")).roles("ADMIN");
+            .withUser("u1").password(passwordEncoder().encode("p1")).roles("ADMIN");
     }
 
     @Bean
-    BCryptPasswordEncoder passwordEncoder() {
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    CustomAuthenticationFailedHandler customAuthFailedHandler() {
+    AuthenticationFailureHandler customAuthFailedHandler() {
         return new CustomAuthenticationFailedHandler();
+    }
+
+    @Bean
+    AuthenticationSuccessHandler authSuccessHandler() {
+        return new CustomAuthSuccessHandler();
     }
 }

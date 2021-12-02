@@ -33,7 +33,7 @@ public class MainController {
         return "restricted";
     }
 
-    @PostMapping("/handleLogin")
+    @GetMapping("/handleLogin")
     public String handleLogin() {
         System.out.println("Handling login");
 

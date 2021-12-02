@@ -13,5 +13,6 @@ public class CustomAuthenticationFailedHandler implements AuthenticationFailureH
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         System.out.println("Auth failed");
+        response.sendRedirect("/");
     }
 }
