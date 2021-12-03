@@ -33,10 +33,10 @@ public class MainController {
         return "restricted";
     }
 
-    @GetMapping("/handleLogin")
-    public String handleLogin() {
-        System.out.println("Handling login");
-
-        return "redirect:/restricted";
-    }
+//    @GetMapping("/handleLogin") // <- don't need that
+//    public String handleLogin() {
+//        System.out.println("Handling login");
+//
+//        return "redirect:/restricted"; // <- don't need that, it's set up in security config
+//    }
 }

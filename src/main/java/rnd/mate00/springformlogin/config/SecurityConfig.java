@@ -24,7 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .formLogin()
                 .loginPage("/signin")
-                .loginProcessingUrl("/handleLogin")
+                .loginProcessingUrl("/handleLogin") // <- this matches 'action' attribute in html
 //                .defaultSuccessUrl("/restricted") // <- can be also done by authSuccessHandler
 //                .failureUrl("/"); // <- can be also done by customAuthFailedHandler
                 .successHandler(authSuccessHandler())
