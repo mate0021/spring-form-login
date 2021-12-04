@@ -5,10 +5,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import rnd.mate00.springformlogin.user.CustomUserDetailsService;
 import rnd.mate00.springformlogin.handler.CustomAuthSuccessHandler;
 import rnd.mate00.springformlogin.handler.CustomAuthenticationFailedHandler;
 
@@ -33,10 +35,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-            .inMemoryAuthentication()
-            .passwordEncoder(new BCryptPasswordEncoder())
-            .withUser("u1").password(passwordEncoder().encode("p1")).roles("ADMIN");
+        auth.userDetailsService(customUserDetailsService()).passwordEncoder(passwordEncoder());
+
+//        auth
+//            .inMemoryAuthentication()
+//            .passwordEncoder(new BCryptPasswordEncoder())
+//            .withUser("u1").password(passwordEncoder().encode("p1")).roles("ADMIN");
     }
 
     @Bean
@@ -52,5 +56,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     AuthenticationSuccessHandler authSuccessHandler() {
         return new CustomAuthSuccessHandler();
+    }
+
+    @Bean
+    UserDetailsService customUserDetailsService() {
+        return new CustomUserDetailsService();
     }
 }
