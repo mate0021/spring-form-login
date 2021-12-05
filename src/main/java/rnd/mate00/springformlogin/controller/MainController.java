@@ -1,8 +1,12 @@
 package rnd.mate00.springformlogin.controller;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import rnd.mate00.springformlogin.user.CustomUserDetails;
 
 @Controller
 public class MainController {
@@ -27,8 +31,10 @@ public class MainController {
     }
 
     @GetMapping("/restricted")
-    public String restricted() {
+    public String restricted(Model model, @AuthenticationPrincipal CustomUserDetails user) {
         System.out.println("Restricted view");
+
+        model.addAttribute("loggedName", user.getUsername());
 
         return "restricted";
     }
