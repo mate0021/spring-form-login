@@ -43,4 +43,11 @@ public class MainController {
 //
 //        return "redirect:/restricted"; // <- don't need that, it's set up in security config
 //    }
+
+    @GetMapping("/bye")
+    public String onLogout() {
+        System.out.println("Saying goodbye");
+
+        return "goodbye";
+    }
 }

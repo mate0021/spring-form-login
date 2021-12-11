@@ -2,11 +2,15 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <body>
-<div>
-    <h3>Welcome!</h3>
-    <div><p th:text="${loggedName}"/></div>
-</div>
+    <div>
+        <h3>Welcome!</h3>
+        <div><p th:text="${loggedName}"/></div>
+    </div>
 
-<p>Welcome page with restricted access</p>
+    <p>Welcome page with restricted access</p>
+
+    <form th:action="@{/logout}" method="post"> <!-- we use form because of CRSF attack prevention -->
+        <input type="submit" value="Logout" />
+    </form>
 </body>
 </html>

@@ -30,7 +30,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .defaultSuccessUrl("/restricted") // <- can be also done by authSuccessHandler
 //                .failureUrl("/"); // <- can be also done by customAuthFailedHandler
                 .successHandler(authSuccessHandler())
-                .failureHandler(customAuthFailedHandler());
+                .failureHandler(customAuthFailedHandler())
+            .and()
+            .logout()
+                .logoutSuccessUrl("/bye");
     }
 
     @Override
